@@ -1,1 +1,48 @@
-<p>todo works!</p>
+<mat-card class="card" color="primary">
+  <mat-card-content class="card-body">
+    <form (ngSubmit)="addTodo()">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          name="inputTodo"
+          placeholder="New Task..."
+          [(ngModel)]="inputTodo"
+        />
+      </mat-form-field>
+    </form>
+    <mat-button-toggle-group name="filter" aria-label="Font Style">
+      <mat-button-toggle value="all" (change)="filterForAll()"
+        >All</mat-button-toggle
+      >
+      <mat-button-toggle value="active" (change)="filterForActive()"
+        >Active</mat-button-toggle
+      >
+      <mat-button-toggle value="completed" (change)="filterForCompleted()"
+        >Completed</mat-button-toggle
+      >
+    </mat-button-toggle-group>
+    <div class="todo-list {{ filterConfig }}">
+      @for (todo of todos; track todo) {
+      <div class="todo-item {{ todo.done ? 'done' : '' }}">
+        <div class="checker">
+          <mat-checkbox
+            class="checkbox-done"
+            type="checkbox"
+            [checked]="todo.done"
+            (click)="toggleIfTaskDone(todo.id)"
+          />
+        </div>
+        <span class="content">{{ todo.name }}</span>
+        <a
+          href="javascript:void(0);"
+          class="float-right remove-todo-item"
+          (click)="deleteTodo(todo.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </a>
+      </div>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>
