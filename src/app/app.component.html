@@ -1,5 +1,11 @@
-<div class="container">
-  <app-todo></app-todo>
-</div>
+<mat-toolbar color="primary" class="fixed-navbar mat-elvation-z4">
+  <mat-toolbar-row>
+    {{ "welcome" | translate }}
+    <button mat-stroked-button (click)="switchLanguage('en')">EN</button>
+    <button mat-stroked-button (click)="switchLanguage('de')">DE</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<app-todo></app-todo>
 
 <router-outlet />

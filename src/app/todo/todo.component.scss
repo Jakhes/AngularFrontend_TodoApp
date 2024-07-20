@@ -1,6 +1,3 @@
-.card {
-}
-
 body {
   margin-top: 20px;
   background: #f8f8f8;
@@ -21,7 +18,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   border-radius: 0;
-  background: #f7f7f7;
+  background: #eda28a;
 }
 .todo-list .todo-item span {
   flex: auto;
@@ -103,6 +100,7 @@ div.uploader {
 }
 
 .mat-mdc-card {
+  flex-direction: row;
   padding: 25px;
   margin-bottom: 20px;
   align-items: center;
