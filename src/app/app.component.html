@@ -1,11 +1,41 @@
 <mat-toolbar color="primary" class="fixed-navbar mat-elvation-z4">
-  <mat-toolbar-row>
-    {{ "welcome" | translate }}
-    <button mat-stroked-button (click)="switchLanguage('en')">EN</button>
-    <button mat-stroked-button (click)="switchLanguage('de')">DE</button>
+  <mat-toolbar-row class="toolbar-row">
+    <img src="/Logo.png" alt="image" class="logo-img" />
+    {{ "title" | translate }}
+
+    <div>
+      <a mat-button routerLink="/todo">Todo App</a>
+    </div>
+
+    <div class="lang-switcher">
+      <button mat-stroked-button (click)="switchLanguage('en')">EN</button>
+      <button mat-stroked-button (click)="switchLanguage('de')">DE</button>
+    </div>
+
+    <div class="settings-menu">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>dialpad</mat-icon>
+          <span>Redial</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>voicemail</mat-icon>
+          <span>Check voice mail</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>notifications_off</mat-icon>
+          <span>Disable alerts</span>
+        </button>
+      </mat-menu>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
-
-<app-todo></app-todo>
 
 <router-outlet />

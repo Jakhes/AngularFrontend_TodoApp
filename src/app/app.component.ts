@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { TodoComponent } from './todo/todo.component';
 import { HttpClient } from '@angular/common/http';
 import {
@@ -11,6 +11,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 export const provideTranslation = () => ({
   defaultLanguage: 'en',
@@ -30,20 +33,25 @@ export function HttpLoaderFactory(http: HttpClient) {
   standalone: true,
   imports: [
     RouterOutlet,
+    RouterLink,
     TodoComponent,
     TranslateModule,
     MatToolbarModule,
     MatButtonModule,
+    MatTabsModule,
+    MatMenuModule,
+    MatIconModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'TodoApp';
 
   constructor(public translate: TranslateService) {
     this.translate.setDefaultLang('en');
   }
+  ngOnInit(): void {}
 
   switchLanguage(language: string) {
     this.translate.use(language);
