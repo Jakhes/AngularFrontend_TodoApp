@@ -1,4 +1,15 @@
-import { AfterViewInit, Component } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  computed,
+  ContentChild,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 
 // three.js imports
 import * as THREE from 'three';
@@ -11,13 +22,88 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
   templateUrl: './three.component.html',
   styleUrl: './three.component.scss',
 })
-export class ThreeComponent implements AfterViewInit {
+export class ThreeComponent implements OnInit {
+  /* @ViewChild('canvas', { static: false })
+  private canvasRef!: ElementRef<HTMLCanvasElement>;
+
+  private camera!: THREE.PerspectiveCamera;
+
+  private canvas!: HTMLCanvasElement;
+
+  private loader = new THREE.TextureLoader();
+  private geometry = new THREE.BoxGeometry(1, 1, 1);
+  private material = new THREE.MeshBasicMaterial();
+
+  private cube: THREE.Mesh = new THREE.Mesh(this.geometry, this.material);
+
+  private renderer!: THREE.WebGLRenderer;
+  private scene!: THREE.Scene;
+
+  @Input() public rotationSpeedX: number = 0.05;
+  @Input() public rotationSpeedY: number = 0.01;
+
+  @Input() public cameraZ: number = 400;
+  @Input() public fieldOfView: number = 1;
+  @Input('nearClipping') public nearClippingPlane: number = 1;
+  @Input('farClipping') public farClippingPlane: number = 1000;
+
+  private createScene() {
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x000000);
+    this.scene.add(this.cube);
+
+    let aspectRatio = this.getAspectRatio();
+    this.camera = new THREE.PerspectiveCamera(
+      this.fieldOfView,
+      aspectRatio,
+      this.nearClippingPlane,
+      this.farClippingPlane
+    );
+    this.camera.position.z = this.cameraZ;
+  }
+
+  private getAspectRatio() {
+    return this.canvas.clientWidth / this.canvas.clientHeight;
+  }
+
+  private animateCube() {
+    this.cube.rotation.x += this.rotationSpeedX;
+    this.cube.rotation.y += this.rotationSpeedY;
+  }
+
+  ngOnDestroy(): void {
+    this.renderer.dispose();
+    this.renderer.forceContextLoss();
+  }
+
+  private startRenderingLoop() {
+    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+    this.renderer.setPixelRatio(devicePixelRatio);
+    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+
+    let component: ThreeComponent = this;
+    (function render() {
+      requestAnimationFrame(render);
+      component.animateCube();
+      component.renderer.render(component.scene, component.camera);
+    });
+  }
+
   ngAfterViewInit(): void {
+    this.canvas = this.canvasRef.nativeElement;
+    this.createScene();
+    this.startRenderingLoop();
+  }
+ */
+
+  ngOnInit(): void {
     const w = window.innerWidth;
     const h = window.innerHeight;
     const render = new THREE.WebGLRenderer({ antialias: true });
     render.setSize(w, h);
-    document.body.appendChild(render.domElement);
+    document
+      .querySelector<HTMLElement>('app-three')
+      ?.appendChild(render.domElement);
 
     const fov = 70;
     const aspect = w / h;
