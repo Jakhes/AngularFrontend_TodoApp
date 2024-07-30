@@ -1,0 +1,55 @@
+<mat-dialog-content>
+  <form>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>{{ "task-name-label" | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        name="task name"
+        required
+        minlength="1"
+        maxlength="100"
+        [(ngModel)]="name"
+      />
+    </mat-form-field>
+  </form>
+  <div class="options">
+    <mat-form-field>
+      <mat-label>{{ "select-due-date-label" | translate }}</mat-label>
+      <input matInput [matDatepicker]="picker" [value]="due_date.value" />
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-stroked-button (click)="onClickToday()">
+      {{ "today-date-button" | translate }}
+    </button>
+    <button mat-stroked-button (click)="onClickTomorrow()">
+      {{ "tomorrow-date-button" | translate }}
+    </button>
+    <mat-form-field>
+      <mat-label>{{ "priority-label" | translate }}</mat-label>
+      <mat-select [(ngModel)]="priority">
+        @for (prio of priorityTypes; track $index) {<mat-option [value]="prio"
+          ><mat-icon class="priority-element-{{ prio }}">flag</mat-icon
+          >{{ prio }}</mat-option
+        >}
+      </mat-select></mat-form-field
+    >
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{ "cancel" | translate }}</button>
+  @if (isNewTask) {
+  <button mat-button [disabled]="name() === ''" (click)="onAddTaskClick()">
+    {{ "add-task" | translate }}
+  </button>
+  } @else {
+  <button mat-button [disabled]="name() === ''" (click)="onAddTaskClick()">
+    {{ "save-task" | translate }}
+  </button>
+  }
+</mat-dialog-actions>

@@ -1,19 +1,20 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <mat-card class="card" color="primary">
+      <mat-card color="primary">
+        <mat-card-header>
+          <mat-card-title
+            ><h1>{{ "todoapp-title" | translate }}</h1></mat-card-title
+          >
+          <button
+            class="settings-button"
+            mat-icon-button
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>menu</mat-icon>
+          </button>
+        </mat-card-header>
         <mat-card-content class="card-body">
-          <form (ngSubmit)="addTodo()">
-            <mat-form-field>
-              <input
-                matInput
-                type="text"
-                name="inputTodo"
-                placeholder="{{ 'newTask' | translate }}"
-                [(ngModel)]="inputTodo"
-              />
-            </mat-form-field>
-          </form>
           <mat-button-toggle-group name="filter" aria-label="Font Style">
             <mat-button-toggle value="all" (change)="filterForAll()">{{
               "all" | translate
@@ -27,18 +28,31 @@
               >{{ "completed" | translate }}</mat-button-toggle
             >
           </mat-button-toggle-group>
+          <button
+            mat-fab
+            class="add-task-button"
+            color="primary"
+            (click)="openDialog()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
           <div class="todo-list {{ filterConfig }}">
             @for (todo of todos; track todo) {
-            <div class="todo-item {{ todo.done ? 'done' : '' }}">
+            <mat-card
+              color="secondary"
+              class="todo-item {{ todo.done ? 'done' : '' }}"
+            >
               <div class="checker">
                 <mat-checkbox
-                  class="checkbox-done"
+                  class="checkbox-done {{ todo.priority }}"
                   type="checkbox"
                   [checked]="todo.done"
                   (click)="toggleIfTaskDone(todo.id)"
                 />
               </div>
-              <span class="content">{{ todo.name }}</span>
+              <span class="content" (click)="openSelectedTodoView($index)">{{
+                todo.name
+              }}</span>
               <a
                 href="javascript:void(0);"
                 class="float-right remove-todo-item"
@@ -46,8 +60,12 @@
               >
                 <mat-icon>delete</mat-icon>
               </a>
-            </div>
+            </mat-card>
             }
+            <span class="add-task-span" (click)="openDialog()">
+              <mat-icon>add</mat-icon>
+              {{ "add-task" | translate }}
+            </span>
           </div>
         </mat-card-content>
       </mat-card>

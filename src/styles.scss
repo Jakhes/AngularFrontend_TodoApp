@@ -1,11 +1,62 @@
+:root {
+  --high_priority: #d6542c;
+  --high_priority_shade: #684d4480;
+  --mid_priority: #e2a83c;
+  --mid_priority_shade: #8b7d6b7c;
+  --low_priority: #125ca1;
+  --low_priority_shade: #31496180;
+
+  --no_priority: #dadada;
+  --no_priority_shade: #b9b9b963;
+}
+
 /* You can add global styles to this file, and also import other style files */
 
 html,
 body {
   height: 100%;
+  color: var(--no_priority);
   background-color: #383d4b;
 }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.P1 .mdc-checkbox__background {
+  border-color: var(--high_priority) !important;
+}
+
+.P2 .mdc-checkbox__background {
+  border-color: var(--mid_priority) !important;
+}
+
+.P3 .mdc-checkbox__background {
+  border-color: var(--low_priority) !important;
+}
+
+.P4 .mdc-checkbox__background {
+  border-color: var(--no_priority) !important;
+}
+
+.priority-element-P1 {
+  color: var(--high_priority);
+}
+
+.priority-element-P2 {
+  color: var(--mid_priority);
+}
+
+.priority-element-P3 {
+  color: var(--low_priority);
+}
+
+.priority-element-P4 {
+  color: var(--no_priority);
+}
+
+.mat-mdc-dialog-surface {
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--no_priority_shade) !important;
 }

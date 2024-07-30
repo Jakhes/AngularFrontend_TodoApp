@@ -1,7 +1,19 @@
 {
   "title": "CodingKraken",
+
+  "todoapp-title": "Todo App",
   "newTask": "New Task...",
   "all": "All",
   "active": "Active",
-  "completed": "Completed"
+  "completed": "Completed",
+
+  "new-task-title": "Todo Editor",
+  "task-name-label": "Task name",
+  "priority-label": "Priority",
+  "today-date-button": "Today",
+  "tomorrow-date-button": "Tomorrow",
+  "select-due-date-label": "Select Due Date",
+  "cancel": "Cancel",
+  "add-task": "Add task",
+  "save-task": "Save task"
 }
