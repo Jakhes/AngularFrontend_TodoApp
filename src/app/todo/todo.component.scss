@@ -57,6 +57,7 @@ body {
 
 .todo-list .todo-item.done span {
   text-decoration: line-through;
+  color: var(--deactivated);
 }
 
 .remove-todo-item {

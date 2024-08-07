@@ -4,11 +4,21 @@ export interface Todo {
   creation_date: String | null;
   due_date: String | null;
   priority: Priority;
-  labels: Array<String>;
+  labels: Array<Label>;
+  assigned_user: User;
   done: boolean;
 }
 
-export interface User {}
+export interface User {
+  id: number;
+  name: String;
+  password: String;
+}
+
+export interface Label {
+  id: number;
+  name: String;
+}
 
 export enum Priority {
   Priority1 = 'P1',

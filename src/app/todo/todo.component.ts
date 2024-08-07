@@ -1,8 +1,8 @@
 import { Component, inject, model, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Priority, Todo } from './todo';
+import { Label, Priority, Todo, User } from './todo';
 import { TodoService } from './todo.service';
-import { FormControl, FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 
 // Angular Material Imports
@@ -35,6 +35,8 @@ import {
   MAT_DATE_LOCALE,
   provideNativeDateAdapter,
 } from '@angular/material/core';
+import { LabelService } from './label.service';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-todo',
@@ -64,7 +66,10 @@ import {
 })
 export class TodoComponent implements OnInit {
   // variables
+
   public todos: Todo[] = [];
+  public labels: Label[] = [];
+  public users: User[] = [];
   inputTodo: String = '';
   filterConfig: String = '';
 
@@ -72,10 +77,16 @@ export class TodoComponent implements OnInit {
   readonly dialog = inject(MatDialog);
 
   // Inject Todoservice
-  constructor(private todoService: TodoService, private datePipe: DatePipe) {}
+  constructor(
+    private todoService: TodoService,
+    private labelService: LabelService,
+    private userService: UserService,
+    private datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
     this.getTodos();
+    this.getLabels();
   }
 
   public getTodos(): void {
@@ -125,6 +136,31 @@ export class TodoComponent implements OnInit {
     });
   }
 
+  //#region "Label Functions"
+
+  public getLabels(): void {
+    this.labelService.getLabels().subscribe({
+      next: (v: Label[]) => (this.labels = v),
+      error: (e) => alert(e),
+    });
+  }
+
+  public addLabel(label: Label) {
+    this.labelService.addLabel(label).subscribe({
+      next: (value: Label) => this.labels.push(value),
+      error: (e) => alert(e),
+    });
+  }
+
+  deleteLabel(id: number) {
+    this.labelService.deleteLabel(id).subscribe({
+      next: () => (this.labels = this.labels.filter((x) => x.id !== id)),
+      error: (e) => alert(e),
+    });
+  }
+
+  //#endregion Label Functions"
+
   openDialog(): void {
     const dialogRef = this.dialog.open(TodoViewDialog, {
       data: {
@@ -135,6 +171,7 @@ export class TodoComponent implements OnInit {
         due_date: '',
         priority: Priority.Priority4,
         labels: [],
+        assigned_user: null,
       },
     });
 
@@ -180,6 +217,7 @@ export class TodoComponent implements OnInit {
     MatSelectModule,
     MatIconModule,
     MatDatepickerModule,
+    ReactiveFormsModule,
   ],
   providers: [
     provideNativeDateAdapter(),
@@ -187,7 +225,7 @@ export class TodoComponent implements OnInit {
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
   ],
 })
-export class TodoViewDialog {
+export class TodoViewDialog implements OnInit {
   readonly priorityTypes = Object.values(Priority);
 
   readonly dialogRef = inject(MatDialogRef<TodoViewDialog>);
@@ -197,11 +235,59 @@ export class TodoViewDialog {
     this.data.due_date ? new Date(this.data.due_date.toString()) : null
   );
   readonly priority = model(this.data.priority);
-  readonly labels = model(this.data.labels);
+  labels = new FormControl(this.data.labels);
+  labelList: Label[] = this.data.labels;
+  readonly assigned_User = model(this.data.assigned_user);
+  userList: User[] = [];
 
   readonly isNewTask: boolean = this.data.id == -1;
 
-  constructor(private datePipe: DatePipe) {}
+  constructor(
+    private datePipe: DatePipe,
+    private labelService: LabelService,
+    private userService: UserService
+  ) {}
+
+  ngOnInit(): void {
+    this.setUpLabels();
+    this.setUpUsers();
+  }
+
+  setUpLabels() {
+    this.labelService.getLabels().subscribe({
+      next: (v) => (
+        // gets all the labels and saves them in the labelsList
+        (this.labelList = v),
+        // for some reason does it not recognise that the elements from labels and labelsList
+        // are the same Labels so i have to get their intersection and set it as the value
+        // for labels
+        this.labels.setValue(
+          this.labelList.filter((x) =>
+            this.data.labels.some((y) => x.id === y.id)
+          )
+        )
+      ),
+      error: (e) => alert(e),
+    });
+  }
+
+  setUpUsers() {
+    this.userService.getUsers().subscribe({
+      next: (v) => (
+        // gets all the users and saves them in the usersList
+        (this.userList = v),
+        this.assigned_User.set(
+          this.userList.find((x) => x.id === this.assigned_User()?.id) ||
+            this.assigned_User()
+        )
+      ),
+      // for some reason does it not recognise that the elements from users and usersList
+      // are the same Users so i have to get their intersection and set it as the value
+      // for users
+
+      error: (e) => alert(e),
+    });
+  }
 
   onClickToday() {
     this.due_date.setValue(new Date());
@@ -217,6 +303,8 @@ export class TodoViewDialog {
   }
 
   onAddTaskClick() {
+    this.labelList;
+    this.labels;
     this.dialogRef.close({
       id: this.data.id,
       name: this.name(),
@@ -226,7 +314,8 @@ export class TodoViewDialog {
         ? this.datePipe.transform(this.due_date.value, 'yyyy-MM-dd')
         : '',
       priority: this.priority(),
-      labels: this.labels(),
+      labels: this.labels.value,
+      assigned_user: this.assigned_User(),
     });
   }
 }
