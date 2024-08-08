@@ -104,11 +104,13 @@ export class TodoComponent implements OnInit {
     this.inputTodo = '';
   }
 
-  deleteTodo(id: number) {
+  deleteTodo(id: number, event: MouseEvent) {
     this.todoService.deleteTodo(id).subscribe({
       next: () => (this.todos = this.todos.filter((x) => x.id !== id)),
       error: (e) => alert(e),
     });
+
+    event.stopPropagation();
   }
 
   // Filter Functions
@@ -125,7 +127,7 @@ export class TodoComponent implements OnInit {
   }
 
   // Function to update Todo if the done Checkbox is clicked
-  toggleIfTaskDone(id: number) {
+  toggleIfTaskDone(id: number, event: MouseEvent) {
     this.todos.map((v) => {
       if (v.id == id) {
         v.done = !v.done;
@@ -134,6 +136,7 @@ export class TodoComponent implements OnInit {
         });
       }
     });
+    event.stopPropagation();
   }
 
   //#region "Label Functions"

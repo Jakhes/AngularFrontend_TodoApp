@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <mat-card color="primary">
+      <mat-card color="primary" class="main-card">
         <mat-card-header>
           <mat-card-title
             ><h1>{{ "todoapp-title" | translate }}</h1></mat-card-title
@@ -41,25 +41,42 @@
             <mat-card
               color="secondary"
               class="todo-item {{ todo.done ? 'done' : '' }}"
+              (click)="openSelectedTodoView($index)"
             >
-              <div class="checker">
-                <mat-checkbox
-                  class="checkbox-done {{ todo.priority }}"
-                  type="checkbox"
-                  [checked]="todo.done"
-                  (click)="toggleIfTaskDone(todo.id)"
-                />
+              <div class="upper-todo-section">
+                <div class="checker">
+                  <mat-checkbox
+                    class="checkbox-done {{ todo.priority }}"
+                    type="checkbox"
+                    [checked]="todo.done"
+                    (click)="toggleIfTaskDone(todo.id, $event)"
+                  />
+                </div>
+                <span class="content">{{ todo.name }}</span>
+                @if (todo.assigned_user) {<mat-card
+                  color="primary"
+                  class="user-card"
+                >
+                  {{ todo.assigned_user.name }} </mat-card
+                >} @if (todo.due_date) {
+                <div class="date">
+                  {{ todo.due_date.toString() | date : "dd/MMM" }}
+                </div>
+                }
+
+                <a
+                  href="javascript:void(0);"
+                  class="float-right remove-todo-item"
+                  (click)="deleteTodo(todo.id, $event)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </a>
               </div>
-              <span class="content" (click)="openSelectedTodoView($index)">{{
-                todo.name
-              }}</span>
-              <a
-                href="javascript:void(0);"
-                class="float-right remove-todo-item"
-                (click)="deleteTodo(todo.id)"
-              >
-                <mat-icon>delete</mat-icon>
-              </a>
+              <div class="lower-todo-section">
+                @for (label of todo.labels; track $index) {
+                <mat-card class="label-card"> {{ label.name }} </mat-card>
+                }
+              </div>
             </mat-card>
             }
             <span class="add-task-span" (click)="openDialog()">
