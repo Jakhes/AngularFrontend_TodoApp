@@ -3,182 +3,53 @@
     <div class="col-md-12">
       <mat-card color="primary" class="main-card">
         <mat-card-header>
-          <mat-card-title
-            ><h1>{{ "todoapp-title" | translate }}</h1></mat-card-title
+          <div
+            style="
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              flex-direction: row;
+              padding-bottom: 8px;
+            "
           >
-          <button
-            class="settings-button"
-            mat-icon-button
-            aria-label="Example icon-button with a menu"
-          >
-            <mat-icon>menu</mat-icon>
-          </button>
+            <mat-card-title
+              ><h1>{{ "todoapp-title" | translate }}</h1></mat-card-title
+            >
+            @if (!see_TodoList) {
+            <button
+              mat-fab
+              extended
+              class="return-button"
+              (click)="activate_TodoList()"
+            >
+              <mat-icon>arrow_back</mat-icon>
+              <span>Return</span>
+            </button>
+            }
+            <button
+              class="settings-button"
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+            >
+              <mat-icon>menu</mat-icon>
+            </button>
+          </div>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="activate_UserView()">
+              <mat-icon>edit</mat-icon>
+              <span>{{ "edit-user-button" | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="activate_LabelView()">
+              <mat-icon>edit</mat-icon>
+              <span>{{ "edit-labels-button" | translate }}</span>
+            </button>
+          </mat-menu>
         </mat-card-header>
         <mat-card-content class="card-body">
-          <div class="tool-bar">
-            <mat-icon class="checked-icon">check_circle_outline</mat-icon>
-            <mat-slide-toggle
-              [(ngModel)]="checked_slider"
-              (click)="$event.stopPropagation()"
-              (change)="toggleFilterCompletedTasks()"
-              labelPosition="before"
-            >
-              {{ "completed-slider-label" | translate }}
-            </mat-slide-toggle>
-
-            <button
-              mat-mini-fab
-              class="add-task-button"
-              color="primary"
-              (click)="openDialog()"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-            <button
-              mat-mini-fab
-              class="filter-options-button"
-              [matMenuTriggerFor]="menu"
-              aria-label="Example icon-button with a menu"
-            >
-              <mat-icon>subject</mat-icon>
-            </button>
-          </div>
-
-          <mat-menu #menu="matMenu">
-            <mat-divider></mat-divider>
-            <mat-label class="sort-label">{{
-              "sort-by-label" | translate
-            }}</mat-label>
-            <span mat-menu-item [matMenuTriggerFor]="sortMenu">
-              <mat-icon>sort</mat-icon>
-              <span>sortBy</span>
-            </span>
-
-            <div mat-menu-item>
-              <mat-slide-toggle
-                [(ngModel)]="ascending"
-                (click)="$event.stopPropagation()"
-                labelPosition="before"
-                ><mat-icon>swap_vert</mat-icon>
-                {{ "completed-slider-label" | translate }}
-              </mat-slide-toggle>
-            </div>
-
-            <mat-divider></mat-divider>
-            <mat-label class="filter-label">{{
-              "filter-by-label" | translate
-            }}</mat-label>
-            <span mat-menu-item [matMenuTriggerFor]="priorityMenu">
-              <mat-icon>flag</mat-icon>
-              <span>priority</span>
-            </span>
-            <span mat-menu-item [matMenuTriggerFor]="userMenu">
-              <mat-icon>face</mat-icon>
-              <span>user</span>
-            </span>
-            <span mat-menu-item [matMenuTriggerFor]="labelMenu">
-              <mat-icon>label</mat-icon>
-              <span>labels</span>
-            </span>
-            <mat-divider></mat-divider>
-            <button mat-menu-item (click)="clearAllFilters()">
-              <mat-icon>clear</mat-icon>{{ "reset-button" | translate }}
-            </button>
-          </mat-menu>
-
-          <mat-menu #sortMenu="matMenu">
-            <button mat-menu-item (click)="sortByField = 'name'">
-              <mat-icon>sort</mat-icon>
-              <span>name</span>
-            </button>
-            <button mat-menu-item (click)="sortByField = 'priority'">
-              <mat-icon>sort</mat-icon>
-              <span>priority</span>
-            </button>
-            <button mat-menu-item (click)="sortByField = 'due_date'">
-              <mat-icon>sort</mat-icon>
-              <span>due_date</span>
-            </button>
-            <button mat-menu-item (click)="sortByField = 'assigned_user'">
-              <mat-icon>sort</mat-icon>
-              <span>assigned_user</span>
-            </button>
-          </mat-menu>
-          <mat-menu #priorityMenu="matMenu">
-            @for (prio of priorityTypes; track $index) {<button
-              mat-menu-item
-              (click)="setPriorityFilter(prio)"
-            >
-              <mat-icon class="priority-element-{{ prio }}">flag</mat-icon
-              >{{ prio }}</button
-            >}
-          </mat-menu>
-          <mat-menu #userMenu="matMenu">
-            @for (user of users; track user) {
-            <button mat-menu-item (click)="setUserFilter(user.id)">
-              <mat-icon>face</mat-icon>{{ user.name }}
-            </button>
-            }
-          </mat-menu>
-          <mat-menu #labelMenu="matMenu">
-            @for (label of labels; track label) {
-            <button mat-menu-item (click)="setLabelsFilter(label)">
-              <mat-icon>label</mat-icon>{{ label.name }}
-            </button>
-            }
-          </mat-menu>
-
-          <div class="todo-list">
-            @for (todo of (todos| sort:sortByField:ascending() |
-            filterCompleted:filterCompleted | filterLabels:filterLabels |
-            filterPriorities:filterPriority | filterUser:filterUserId ); track
-            todo) {
-            <mat-card
-              color="secondary"
-              class="todo-item {{ todo.done ? 'done' : '' }}"
-              (click)="openSelectedTodoView($index)"
-            >
-              <div class="upper-todo-section">
-                <div class="checker">
-                  <mat-checkbox
-                    class="checkbox-done {{ todo.priority }}"
-                    type="checkbox"
-                    [checked]="todo.done"
-                    (click)="toggleIfTaskDone(todo.id, $event)"
-                  />
-                </div>
-                <span class="content">{{ todo.name }}</span>
-                @if (todo.assigned_user) {<mat-card
-                  color="primary"
-                  class="user-card"
-                >
-                  {{ todo.assigned_user.name }} </mat-card
-                >} @if (todo.due_date) {
-                <div class="date">
-                  {{ todo.due_date.toString() | date : "dd/MMM" }}
-                </div>
-                }
-
-                <a
-                  href="javascript:void(0);"
-                  class="float-right remove-todo-item"
-                  (click)="deleteTodo(todo.id, $event)"
-                >
-                  <mat-icon>delete</mat-icon>
-                </a>
-              </div>
-              <div class="lower-todo-section">
-                @for (label of todo.labels; track $index) {
-                <mat-card class="label-card"> {{ label.name }} </mat-card>
-                }
-              </div>
-            </mat-card>
-            }
-            <span class="add-task-span" (click)="openDialog()">
-              <mat-icon>add</mat-icon>
-              {{ "add-task" | translate }}
-            </span>
-          </div>
+          @if (see_TodoList) {<app-todo-list></app-todo-list>} @if
+          (see_UserView) {<todo-user-view></todo-user-view>} @if (see_LabelView)
+          {<todo-labels-view></todo-labels-view>}
         </mat-card-content>
       </mat-card>
     </div>

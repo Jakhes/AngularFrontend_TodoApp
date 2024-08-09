@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Priority, Todo } from '../todo';
+import { Priority, Todo } from '../models/todo';
 
 @Pipe({
   name: 'filterPriorities',

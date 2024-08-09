@@ -1,390 +1,53 @@
-import { Component, inject, model, OnInit, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Label, Priority, Todo, User } from './todo';
-import { TodoService } from './todo.service';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule, DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
 
-// Angular Material Imports
+// angular Material imports
 import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
-import {
-  MAT_DATE_LOCALE,
-  provideNativeDateAdapter,
-} from '@angular/material/core';
-import { LabelService } from './label.service';
-import { UserService } from './user.service';
+import { MatMenuModule } from '@angular/material/menu';
 
-import { SortPipe } from './pipes/sort.pipe';
-import { FilterCompletedPipe } from './pipes/filter-completed.pipe';
-import { FilterLabelsPipe } from './pipes/filter-labels.pipe';
-import { FilterPrioritiesPipe } from './pipes/filter-priorities.pipe';
-import { FilterUserPipe } from './pipes/filter-user.pipe';
+// components imports
+import { TodoListComponent } from './components/todo-list/todo-list.component';
+import { UserViewComponent } from './components/user-view/user-view.component';
+import { LabelsViewComponent } from './components/labels-view/labels-view.component';
 
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-todo',
   standalone: true,
   imports: [
-    RouterOutlet,
-    FormsModule,
-    CommonModule,
     MatIconModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatCheckboxModule,
-    MatGridListModule,
-    MatSidenavModule,
-    MatListModule,
-    MatInputModule,
-    MatFormFieldModule,
     MatCardModule,
+    MatMenuModule,
     MatButtonModule,
-    MatButtonToggleModule,
     TranslateModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    MatDividerModule,
-    MatSelectModule,
-    SortPipe,
-    FilterCompletedPipe,
-    FilterLabelsPipe,
-    FilterPrioritiesPipe,
-    FilterUserPipe,
+    TodoListComponent,
+    UserViewComponent,
+    LabelsViewComponent,
   ],
 
-  providers: [DatePipe],
+  providers: [],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.scss',
 })
-export class TodoComponent implements OnInit {
-  // variables
-  readonly priorityTypes = Object.values(Priority);
+export class TodoComponent {
+  public see_TodoList: boolean = true;
+  public see_UserView: boolean = false;
+  public see_LabelView: boolean = false;
 
-  public todos: Todo[] = [];
-  public labels: Label[] = [];
-  public users: User[] = [];
-  inputTodo: String = '';
-
-  public sortByField: string = 'name';
-  public ascending = model(true);
-  public filterPriority: Priority | null = null;
-  public filterUserId: number = -1;
-  public filterLabels: Label | null = null;
-
-  public filterCompleted: boolean = false;
-
-  readonly name = model('');
-  readonly dialog = inject(MatDialog);
-
-  readonly checked_slider = model(false);
-
-  // Inject Todoservice
-  constructor(
-    private todoService: TodoService,
-    private labelService: LabelService,
-    private userService: UserService,
-    private datePipe: DatePipe
-  ) {}
-
-  ngOnInit(): void {
-    this.getTodos();
-    this.getLabels();
-    this.getUsers();
-    this.toggleFilterCompletedTasks();
+  public activate_TodoList() {
+    this.see_TodoList = true;
+    this.see_UserView = false;
+    this.see_LabelView = false;
   }
-
-  public setPriorityFilter(priority: Priority) {
-    this.filterPriority = priority;
+  public activate_UserView() {
+    this.see_TodoList = false;
+    this.see_UserView = true;
+    this.see_LabelView = false;
   }
-
-  public setUserFilter(user: number) {
-    this.filterUserId = user;
-  }
-
-  public setLabelsFilter(label: Label) {
-    this.filterLabels = label;
-  }
-
-  public toggleFilterCompletedTasks() {
-    this.filterCompleted = this.checked_slider();
-  }
-
-  public clearAllFilters() {
-    this.sortByField = 'name';
-    this.ascending.set(true);
-    this.filterPriority = null;
-    this.filterUserId = -1;
-    this.filterLabels = null;
-    this.filterCompleted = false;
-  }
-
-  public getTodos(): void {
-    this.todoService.getTodos().subscribe({
-      next: (v) => (this.todos = v),
-      error: (e) => alert(e),
-    });
-  }
-
-  public addTodo(todo: Todo) {
-    this.todoService.addTodo(todo).subscribe({
-      next: (value: Todo) => this.todos.push(value),
-      error: (e) => alert(e),
-    });
-    this.inputTodo = '';
-  }
-
-  deleteTodo(id: number, event: MouseEvent) {
-    this.todoService.deleteTodo(id).subscribe({
-      next: () => (this.todos = this.todos.filter((x) => x.id !== id)),
-      error: (e) => alert(e),
-    });
-
-    event.stopPropagation();
-  }
-
-  // Function to update Todo if the done Checkbox is clicked
-  toggleIfTaskDone(id: number, event: MouseEvent) {
-    this.todos.map((v) => {
-      if (v.id == id) {
-        v.done = !v.done;
-        this.todoService.updateTodo(v).subscribe({
-          error: (e) => alert(e),
-        });
-      }
-    });
-    event.stopPropagation();
-  }
-
-  //#region "Label Functions"
-
-  public getLabels(): void {
-    this.labelService.getLabels().subscribe({
-      next: (v: Label[]) => (this.labels = v),
-      error: (e) => alert(e),
-    });
-  }
-
-  public addLabel(label: Label) {
-    this.labelService.addLabel(label).subscribe({
-      next: (value: Label) => this.labels.push(value),
-      error: (e) => alert(e),
-    });
-  }
-
-  deleteLabel(id: number) {
-    this.labelService.deleteLabel(id).subscribe({
-      next: () => (this.labels = this.labels.filter((x) => x.id !== id)),
-      error: (e) => alert(e),
-    });
-  }
-
-  //#endregion Label Functions"
-
-  //#region "User Functions"
-
-  public getUsers(): void {
-    this.userService.getUsers().subscribe({
-      next: (v: User[]) => (this.users = v),
-      error: (e) => alert(e),
-    });
-  }
-
-  public addUser(user: User) {
-    this.userService.addUser(user).subscribe({
-      next: (value: User) => this.users.push(value),
-      error: (e) => alert(e),
-    });
-  }
-
-  deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe({
-      next: () => (this.users = this.users.filter((x) => x.id !== id)),
-      error: (e) => alert(e),
-    });
-  }
-
-  //#endregion User Functions"
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(TodoViewDialog, {
-      data: {
-        id: -1,
-        name: this.inputTodo,
-        done: false,
-        creation_date: this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
-        due_date: '',
-        priority: Priority.Priority4,
-        labels: [],
-        assigned_user: null,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      if (result !== undefined) {
-        this.addTodo(result);
-      }
-    });
-  }
-
-  openSelectedTodoView(todo_index: number): void {
-    const dialogRef = this.dialog.open(TodoViewDialog, {
-      data: this.todos[todo_index],
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      if (result !== undefined) {
-        this.todoService.updateTodo(result).subscribe({
-          next: (v) => (this.todos[todo_index] = v),
-          error: (e) => alert(e),
-        });
-      }
-    });
-  }
-}
-
-@Component({
-  selector: 'todo-view-dialog',
-  templateUrl: 'todo-view.component.html',
-  standalone: true,
-  imports: [
-    TranslateModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
-    MatSelectModule,
-    MatIconModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
-  ],
-  providers: [
-    provideNativeDateAdapter(),
-    DatePipe,
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-  ],
-})
-export class TodoViewDialog implements OnInit {
-  readonly priorityTypes = Object.values(Priority);
-
-  readonly dialogRef = inject(MatDialogRef<TodoViewDialog>);
-  readonly data = inject<Todo>(MAT_DIALOG_DATA);
-  readonly name = model(this.data.name);
-  readonly due_date = new FormControl(
-    this.data.due_date ? new Date(this.data.due_date.toString()) : null
-  );
-  readonly priority = model(this.data.priority);
-  labels = new FormControl(this.data.labels);
-  labelList: Label[] = this.data.labels;
-  readonly assigned_User = model(this.data.assigned_user);
-  userList: User[] = [];
-
-  readonly isNewTask: boolean = this.data.id == -1;
-
-  constructor(
-    private datePipe: DatePipe,
-    private labelService: LabelService,
-    private userService: UserService
-  ) {}
-
-  ngOnInit(): void {
-    this.setUpLabels();
-    this.setUpUsers();
-  }
-
-  setUpLabels() {
-    this.labelService.getLabels().subscribe({
-      next: (v) => (
-        // gets all the labels and saves them in the labelsList
-        (this.labelList = v),
-        // for some reason does it not recognise that the elements from labels and labelsList
-        // are the same Labels so i have to get their intersection and set it as the value
-        // for labels
-        this.labels.setValue(
-          this.labelList.filter((x) =>
-            this.data.labels.some((y) => x.id === y.id)
-          )
-        )
-      ),
-      error: (e) => alert(e),
-    });
-  }
-
-  setUpUsers() {
-    this.userService.getUsers().subscribe({
-      next: (v) => (
-        // gets all the users and saves them in the usersList
-        (this.userList = v),
-        this.assigned_User.set(
-          this.userList.find((x) => x.id === this.assigned_User()?.id) ||
-            this.assigned_User()
-        )
-      ),
-      // for some reason does it not recognise that the elements from users and usersList
-      // are the same Users so i have to get their intersection and set it as the value
-      // for users
-
-      error: (e) => alert(e),
-    });
-  }
-
-  onClickToday() {
-    this.due_date.setValue(new Date());
-  }
-  onClickTomorrow() {
-    var date = new Date();
-    date.setDate(date.getDate() + 1);
-    this.due_date.setValue(date);
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onAddTaskClick() {
-    this.labelList;
-    this.labels;
-    this.dialogRef.close({
-      id: this.data.id,
-      name: this.name(),
-      done: this.data.done,
-      creation_date: this.data.creation_date,
-      due_date: this.due_date
-        ? this.datePipe.transform(this.due_date.value, 'yyyy-MM-dd')
-        : '',
-      priority: this.priority(),
-      labels: this.labels.value,
-      assigned_user: this.assigned_User(),
-    });
+  public activate_LabelView() {
+    this.see_TodoList = false;
+    this.see_UserView = false;
+    this.see_LabelView = true;
   }
 }

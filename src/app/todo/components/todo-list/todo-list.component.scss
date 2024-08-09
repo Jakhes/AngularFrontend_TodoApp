@@ -1,0 +1,270 @@
+body {
+  margin-top: 20px;
+  background: #f8f8f8;
+}
+
+.todo-nav {
+  margin-top: 10px;
+}
+
+.todo-list {
+  margin: 32px 0;
+}
+
+.todo-list .todo-item {
+  padding: 15px;
+  margin: 5px 0;
+  //background: #2c2f35;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--no_priority_light_shade) !important;
+  //border-left-style: hidden;
+  //border-bottom-style: hidden;
+  //border-top-style: hidden;
+  //border-right-style: hidden;
+  cursor: pointer;
+}
+
+.todo-list .todo-item span {
+  flex: auto;
+  color: #fff;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.todo-list .todo-item .content {
+  margin-left: 10px;
+}
+
+.todo-list .todo-item.done span {
+  text-decoration: line-through;
+  color: var(--deactivated);
+}
+
+.todo-list .todo-item.done {
+  border-color: var(--no_priority_shade) !important;
+  border-style: dashed !important;
+
+  opacity: 0.5;
+}
+
+.remove-todo-item {
+  width: 24px;
+  height: 24px;
+
+  color: #ccc;
+  visibility: hidden;
+}
+
+.remove-todo-item:hover {
+  color: var(--high_priority);
+}
+
+.todo-item:hover .remove-todo-item {
+  visibility: visible;
+}
+
+div.checker {
+  width: 40px;
+  height: 40px;
+}
+
+div.checker .checkbox-done {
+  width: 40px;
+  height: 40px;
+}
+
+.user-card {
+  padding: 2px 8px;
+  background-color: var(--user);
+  border-radius: 8px;
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+.date {
+  border-style: none;
+  border-width: 1px;
+  padding: 4px;
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+.upper-todo-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.lower-todo-section {
+  padding: 0px 40px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: row;
+}
+.label-card {
+  color: var(--no_priority_shade);
+  border-style: solid;
+  border-color: var(--no_priority_shade);
+  border-width: 1px;
+  border-radius: 6px;
+  margin: 0px 8px;
+  padding: 0px 4px;
+}
+
+div.button *,
+div.checker,
+div.checker *,
+div.radio,
+div.radio *,
+div.selector,
+div.selector *,
+div.uploader,
+div.uploader * {
+  margin: 0;
+  padding: 0;
+}
+
+div.checker,
+div.radio,
+div.selector,
+div.uploader {
+  display: -moz-inline-box;
+  display: inline-block;
+  zoom: 1;
+  vertical-align: middle;
+}
+
+.main-card {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  padding-bottom: 32px;
+  align-items: center;
+}
+
+.card-body {
+  padding: 25px;
+  width: 100%;
+}
+
+.mat-mdc-card-header {
+  width: 100%;
+  background-color: #9b442a;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.settings-button {
+  margin-left: auto;
+  width: 50px;
+  height: 50px;
+}
+.settings-button .mat-icon {
+  top: -3px;
+  left: -7px;
+  width: 50px;
+  height: 50px;
+  font-size: 40px;
+}
+
+.add-task-span {
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  .mat-icon {
+    margin-right: 8px;
+    color: var(--high_priority);
+    border-radius: 100%;
+  }
+}
+
+.add-task-span:hover {
+  .mat-icon {
+    margin-right: 8px;
+    color: #ccc;
+    background-color: var(--high_priority);
+  }
+  color: var(--high_priority);
+}
+
+.add-task-button {
+  float: right;
+  top: 64px;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 1;
+  margin-left: auto;
+}
+
+.filter-options-button {
+  float: right;
+  top: 64px;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 1;
+  margin-left: 16px;
+}
+
+.checked-icon {
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+  margin: 0px 8px;
+}
+
+.tool-bar {
+  display: flex;
+  align-items: center;
+}
+
+.P1 {
+  --mdc-checkbox-selected-checkmark-color: var(--high_priority);
+  --mdc-checkbox-selected-focus-icon-color: var(--high_priority_shade);
+  --mdc-checkbox-selected-hover-icon-color: var(--high_priority_shade);
+  --mdc-checkbox-selected-icon-color: var(--high_priority_shade);
+  --mdc-checkbox-selected-focus-state-layer-color: var(--high_priority);
+  --mdc-checkbox-selected-hover-state-layer-color: var(--high_priority);
+  --mdc-checkbox-unselected-focus-state-layer-color: var(--high_priority);
+  --mdc-checkbox-unselected-hover-state-layer-color: var(--high_priority);
+  --mdc-checkbox-unselected-pressed-state-layer-color: var(--high_priority);
+  --mdc-checkbox-selected-pressed-state-layer-color: var(--high_priority);
+}
+.P2 {
+  --mdc-checkbox-selected-checkmark-color: var(--mid_priority);
+  --mdc-checkbox-selected-focus-icon-color: var(--mid_priority_shade);
+  --mdc-checkbox-selected-hover-icon-color: var(--mid_priority_shade);
+  --mdc-checkbox-selected-icon-color: var(--mid_priority_shade);
+  --mdc-checkbox-selected-focus-state-layer-color: var(--mid_priority);
+  --mdc-checkbox-selected-hover-state-layer-color: var(--mid_priority);
+  --mdc-checkbox-unselected-focus-state-layer-color: var(--mid_priority);
+  --mdc-checkbox-unselected-hover-state-layer-color: var(--mid_priority);
+  --mdc-checkbox-unselected-pressed-state-layer-color: var(--mid_priority);
+  --mdc-checkbox-selected-pressed-state-layer-color: var(--mid_priority);
+}
+
+.P3 {
+  --mdc-checkbox-selected-checkmark-color: var(--low_priority);
+  --mdc-checkbox-selected-focus-icon-color: var(--low_priority_shade);
+  --mdc-checkbox-selected-hover-icon-color: var(--low_priority_shade);
+  --mdc-checkbox-selected-icon-color: var(--low_priority_shade);
+  --mdc-checkbox-selected-focus-state-layer-color: var(--low_priority);
+  --mdc-checkbox-selected-hover-state-layer-color: var(--low_priority);
+  --mdc-checkbox-unselected-focus-state-layer-color: var(--low_priority);
+  --mdc-checkbox-unselected-hover-state-layer-color: var(--low_priority);
+  --mdc-checkbox-unselected-pressed-state-layer-color: var(--low_priority);
+  --mdc-checkbox-selected-pressed-state-layer-color: var(--low_priority);
+}
+
+.P4 {
+  --mdc-checkbox-selected-checkmark-color: var(--no_priority);
+  --mdc-checkbox-selected-focus-icon-color: var(--no_priority_shade);
+  --mdc-checkbox-selected-hover-icon-color: var(--no_priority_shade);
+  --mdc-checkbox-selected-icon-color: var(--no_priority_shade);
+  --mdc-checkbox-selected-focus-state-layer-color: var(--no_priority);
+  --mdc-checkbox-selected-hover-state-layer-color: var(--no_priority);
+  --mdc-checkbox-unselected-focus-state-layer-color: var(--no_priority);
+  --mdc-checkbox-unselected-hover-state-layer-color: var(--no_priority);
+  --mdc-checkbox-unselected-pressed-state-layer-color: var(--no_priority);
+  --mdc-checkbox-selected-pressed-state-layer-color: var(--no_priority);
+}

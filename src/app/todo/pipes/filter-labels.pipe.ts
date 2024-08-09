@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Label, Todo } from '../todo';
+import { Label, Todo } from '../models/todo';
 
 @Pipe({
   name: 'filterLabels',
