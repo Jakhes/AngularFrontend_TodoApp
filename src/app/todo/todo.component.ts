@@ -21,6 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
@@ -37,6 +39,12 @@ import {
 } from '@angular/material/core';
 import { LabelService } from './label.service';
 import { UserService } from './user.service';
+
+import { SortPipe } from './pipes/sort.pipe';
+import { FilterCompletedPipe } from './pipes/filter-completed.pipe';
+import { FilterLabelsPipe } from './pipes/filter-labels.pipe';
+import { FilterPrioritiesPipe } from './pipes/filter-priorities.pipe';
+import { FilterUserPipe } from './pipes/filter-user.pipe';
 
 @Component({
   selector: 'app-todo',
@@ -59,22 +67,41 @@ import { UserService } from './user.service';
     MatButtonToggleModule,
     TranslateModule,
     MatDialogModule,
+    MatSlideToggleModule,
+    MatDividerModule,
+    MatSelectModule,
+    SortPipe,
+    FilterCompletedPipe,
+    FilterLabelsPipe,
+    FilterPrioritiesPipe,
+    FilterUserPipe,
   ],
+
   providers: [DatePipe],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.scss',
 })
 export class TodoComponent implements OnInit {
   // variables
+  readonly priorityTypes = Object.values(Priority);
 
   public todos: Todo[] = [];
   public labels: Label[] = [];
   public users: User[] = [];
   inputTodo: String = '';
-  filterConfig: String = '';
+
+  public sortByField: string = 'name';
+  public ascending = model(true);
+  public filterPriority: Priority | null = null;
+  public filterUserId: number = -1;
+  public filterLabels: Label | null = null;
+
+  public filterCompleted: boolean = false;
 
   readonly name = model('');
   readonly dialog = inject(MatDialog);
+
+  readonly checked_slider = model(false);
 
   // Inject Todoservice
   constructor(
@@ -87,6 +114,33 @@ export class TodoComponent implements OnInit {
   ngOnInit(): void {
     this.getTodos();
     this.getLabels();
+    this.getUsers();
+    this.toggleFilterCompletedTasks();
+  }
+
+  public setPriorityFilter(priority: Priority) {
+    this.filterPriority = priority;
+  }
+
+  public setUserFilter(user: number) {
+    this.filterUserId = user;
+  }
+
+  public setLabelsFilter(label: Label) {
+    this.filterLabels = label;
+  }
+
+  public toggleFilterCompletedTasks() {
+    this.filterCompleted = this.checked_slider();
+  }
+
+  public clearAllFilters() {
+    this.sortByField = 'name';
+    this.ascending.set(true);
+    this.filterPriority = null;
+    this.filterUserId = -1;
+    this.filterLabels = null;
+    this.filterCompleted = false;
   }
 
   public getTodos(): void {
@@ -111,19 +165,6 @@ export class TodoComponent implements OnInit {
     });
 
     event.stopPropagation();
-  }
-
-  // Filter Functions
-  filterForActive() {
-    this.filterConfig = 'only-notdone';
-  }
-
-  filterForCompleted() {
-    this.filterConfig = 'only-done';
-  }
-
-  filterForAll() {
-    this.filterConfig = '';
   }
 
   // Function to update Todo if the done Checkbox is clicked
@@ -163,6 +204,31 @@ export class TodoComponent implements OnInit {
   }
 
   //#endregion Label Functions"
+
+  //#region "User Functions"
+
+  public getUsers(): void {
+    this.userService.getUsers().subscribe({
+      next: (v: User[]) => (this.users = v),
+      error: (e) => alert(e),
+    });
+  }
+
+  public addUser(user: User) {
+    this.userService.addUser(user).subscribe({
+      next: (value: User) => this.users.push(value),
+      error: (e) => alert(e),
+    });
+  }
+
+  deleteUser(id: number) {
+    this.userService.deleteUser(id).subscribe({
+      next: () => (this.users = this.users.filter((x) => x.id !== id)),
+      error: (e) => alert(e),
+    });
+  }
+
+  //#endregion User Functions"
 
   openDialog(): void {
     const dialogRef = this.dialog.open(TodoViewDialog, {

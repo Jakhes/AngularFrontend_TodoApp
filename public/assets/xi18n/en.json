@@ -5,7 +5,7 @@
   "newTask": "New Task...",
   "all": "All",
   "active": "Active",
-  "completed": "Completed",
+  "completed-slider-label": "Only Active",
 
   "new-task-title": "Todo Editor",
   "task-name-label": "Task name",

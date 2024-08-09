@@ -44,19 +44,19 @@ body {
 }
 
 .priority-element-P1 {
-  color: var(--high_priority);
+  color: var(--high_priority) !important;
 }
 
 .priority-element-P2 {
-  color: var(--mid_priority);
+  color: var(--mid_priority) !important;
 }
 
 .priority-element-P3 {
-  color: var(--low_priority);
+  color: var(--low_priority) !important;
 }
 
 .priority-element-P4 {
-  color: var(--no_priority);
+  color: var(--no_priority) !important;
 }
 
 .mat-mdc-dialog-surface {

@@ -15,29 +15,124 @@
           </button>
         </mat-card-header>
         <mat-card-content class="card-body">
-          <mat-button-toggle-group name="filter" aria-label="Font Style">
-            <mat-button-toggle value="all" (change)="filterForAll()">{{
-              "all" | translate
-            }}</mat-button-toggle>
-            <mat-button-toggle value="active" (change)="filterForActive()">{{
-              "active" | translate
-            }}</mat-button-toggle>
-            <mat-button-toggle
-              value="completed"
-              (change)="filterForCompleted()"
-              >{{ "completed" | translate }}</mat-button-toggle
+          <div class="tool-bar">
+            <mat-icon class="checked-icon">check_circle_outline</mat-icon>
+            <mat-slide-toggle
+              [(ngModel)]="checked_slider"
+              (click)="$event.stopPropagation()"
+              (change)="toggleFilterCompletedTasks()"
+              labelPosition="before"
             >
-          </mat-button-toggle-group>
-          <button
-            mat-fab
-            class="add-task-button"
-            color="primary"
-            (click)="openDialog()"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-          <div class="todo-list {{ filterConfig }}">
-            @for (todo of todos; track todo) {
+              {{ "completed-slider-label" | translate }}
+            </mat-slide-toggle>
+
+            <button
+              mat-mini-fab
+              class="add-task-button"
+              color="primary"
+              (click)="openDialog()"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              class="filter-options-button"
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>subject</mat-icon>
+            </button>
+          </div>
+
+          <mat-menu #menu="matMenu">
+            <mat-divider></mat-divider>
+            <mat-label class="sort-label">{{
+              "sort-by-label" | translate
+            }}</mat-label>
+            <span mat-menu-item [matMenuTriggerFor]="sortMenu">
+              <mat-icon>sort</mat-icon>
+              <span>sortBy</span>
+            </span>
+
+            <div mat-menu-item>
+              <mat-slide-toggle
+                [(ngModel)]="ascending"
+                (click)="$event.stopPropagation()"
+                labelPosition="before"
+                ><mat-icon>swap_vert</mat-icon>
+                {{ "completed-slider-label" | translate }}
+              </mat-slide-toggle>
+            </div>
+
+            <mat-divider></mat-divider>
+            <mat-label class="filter-label">{{
+              "filter-by-label" | translate
+            }}</mat-label>
+            <span mat-menu-item [matMenuTriggerFor]="priorityMenu">
+              <mat-icon>flag</mat-icon>
+              <span>priority</span>
+            </span>
+            <span mat-menu-item [matMenuTriggerFor]="userMenu">
+              <mat-icon>face</mat-icon>
+              <span>user</span>
+            </span>
+            <span mat-menu-item [matMenuTriggerFor]="labelMenu">
+              <mat-icon>label</mat-icon>
+              <span>labels</span>
+            </span>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="clearAllFilters()">
+              <mat-icon>clear</mat-icon>{{ "reset-button" | translate }}
+            </button>
+          </mat-menu>
+
+          <mat-menu #sortMenu="matMenu">
+            <button mat-menu-item (click)="sortByField = 'name'">
+              <mat-icon>sort</mat-icon>
+              <span>name</span>
+            </button>
+            <button mat-menu-item (click)="sortByField = 'priority'">
+              <mat-icon>sort</mat-icon>
+              <span>priority</span>
+            </button>
+            <button mat-menu-item (click)="sortByField = 'due_date'">
+              <mat-icon>sort</mat-icon>
+              <span>due_date</span>
+            </button>
+            <button mat-menu-item (click)="sortByField = 'assigned_user'">
+              <mat-icon>sort</mat-icon>
+              <span>assigned_user</span>
+            </button>
+          </mat-menu>
+          <mat-menu #priorityMenu="matMenu">
+            @for (prio of priorityTypes; track $index) {<button
+              mat-menu-item
+              (click)="setPriorityFilter(prio)"
+            >
+              <mat-icon class="priority-element-{{ prio }}">flag</mat-icon
+              >{{ prio }}</button
+            >}
+          </mat-menu>
+          <mat-menu #userMenu="matMenu">
+            @for (user of users; track user) {
+            <button mat-menu-item (click)="setUserFilter(user.id)">
+              <mat-icon>face</mat-icon>{{ user.name }}
+            </button>
+            }
+          </mat-menu>
+          <mat-menu #labelMenu="matMenu">
+            @for (label of labels; track label) {
+            <button mat-menu-item (click)="setLabelsFilter(label)">
+              <mat-icon>label</mat-icon>{{ label.name }}
+            </button>
+            }
+          </mat-menu>
+
+          <div class="todo-list">
+            @for (todo of (todos| sort:sortByField:ascending() |
+            filterCompleted:filterCompleted | filterLabels:filterLabels |
+            filterPriorities:filterPriority | filterUser:filterUserId ); track
+            todo) {
             <mat-card
               color="secondary"
               class="todo-item {{ todo.done ? 'done' : '' }}"
