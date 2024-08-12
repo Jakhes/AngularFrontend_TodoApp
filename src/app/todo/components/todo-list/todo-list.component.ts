@@ -1,4 +1,4 @@
-import { Component, inject, model, OnInit, signal } from '@angular/core';
+import { Component, inject, model, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Label, Priority, Todo, User } from '../../models/todo';
 import { TodoService } from '../../services/todo.service';
