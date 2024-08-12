@@ -59,13 +59,13 @@
   <div class="date-options">
     <mat-form-field>
       <mat-label>{{ "select-due-date-label" | translate }}</mat-label>
-      <input matInput [matDatepicker]="picker" [value]="due_date.value" />
+      <input matInput [matDatepicker]="picker" [formControl]="due_date" />
       <mat-hint>DD/MM/YYYY</mat-hint>
       <mat-datepicker-toggle
         matIconSuffix
         [for]="picker"
       ></mat-datepicker-toggle>
-      <mat-datepicker #picker> </mat-datepicker>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <button mat-stroked-button (click)="onClickToday()">
       {{ "today-date-button" | translate }}
