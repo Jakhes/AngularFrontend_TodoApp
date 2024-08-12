@@ -129,7 +129,7 @@
         {{ todo.assigned_user.name }} </mat-card
       >} @if (todo.due_date) {
       <div class="date">
-        {{ todo.due_date.toString() | date : "dd/MMM" }}
+        {{ todo.due_date.toString() | date : "dd/MMM/yyyy" }}
       </div>
       }
 
