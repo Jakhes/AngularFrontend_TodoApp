@@ -126,8 +126,6 @@ export class TodoViewDialog implements OnInit {
   }
 
   onAddTaskClick() {
-    this.labelList;
-    this.labels;
     this.dialogRef.close({
       id: this.data.id,
       name: this.name(),

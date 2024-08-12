@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LabelsViewComponent } from './labels-view.component';
+import { OptionsViewComponent } from './options-view.component';
 
 describe('LabelsViewComponent', () => {
-  let component: LabelsViewComponent;
-  let fixture: ComponentFixture<LabelsViewComponent>;
+  let component: OptionsViewComponent;
+  let fixture: ComponentFixture<OptionsViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LabelsViewComponent]
-    })
-    .compileComponents();
+      imports: [OptionsViewComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(LabelsViewComponent);
+    fixture = TestBed.createComponent(OptionsViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

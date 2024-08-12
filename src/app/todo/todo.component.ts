@@ -8,8 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 
 // components imports
 import { TodoListComponent } from './components/todo-list/todo-list.component';
-import { UserViewComponent } from './components/user-view/user-view.component';
-import { LabelsViewComponent } from './components/labels-view/labels-view.component';
+import { OptionsViewComponent } from './components/options-view/options-view.component';
 
 import { TranslateModule } from '@ngx-translate/core';
 @Component({
@@ -22,8 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatButtonModule,
     TranslateModule,
     TodoListComponent,
-    UserViewComponent,
-    LabelsViewComponent,
+    OptionsViewComponent,
   ],
 
   providers: [],
@@ -32,22 +30,14 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class TodoComponent {
   public see_TodoList: boolean = true;
-  public see_UserView: boolean = false;
-  public see_LabelView: boolean = false;
+  public see_OptionsView: boolean = false;
 
   public activate_TodoList() {
     this.see_TodoList = true;
-    this.see_UserView = false;
-    this.see_LabelView = false;
+    this.see_OptionsView = false;
   }
-  public activate_UserView() {
+  public activate_OptionsView() {
     this.see_TodoList = false;
-    this.see_UserView = true;
-    this.see_LabelView = false;
-  }
-  public activate_LabelView() {
-    this.see_TodoList = false;
-    this.see_UserView = false;
-    this.see_LabelView = true;
+    this.see_OptionsView = true;
   }
 }

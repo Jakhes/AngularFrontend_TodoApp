@@ -1,0 +1,91 @@
+<mat-accordion multi="true">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon style="margin-right: 16px">face</mat-icon>
+        {{ "users-title-accordion" | translate }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+    <mat-list>
+      @for (user of users; track $index) {
+      <mat-list-item class="item">
+        <a
+          matListItemIcon
+          href="javascript:void(0);"
+          (click)="deleteUser(user.id)"
+          class="delete-button"
+        >
+          <mat-icon>delete</mat-icon>
+        </a>
+        <span
+          class="item-text"
+          (click)="openSelectedUserDialog(user, $index)"
+          >{{ user.name }}</span
+        >
+        <a
+          href="javascript:void(0);"
+          (click)="openSelectedUserDialog(user, $index)"
+          class="edit-button"
+          matListItemMeta
+        >
+          <mat-icon>edit</mat-icon>
+        </a>
+      </mat-list-item>
+      }
+
+      <mat-action-list>
+        <button mat-list-item (click)="openNewUserDialog()">
+          <span class="add-span">
+            <mat-icon>add</mat-icon>
+            {{ "add-user-button" | translate }}
+          </span>
+        </button>
+      </mat-action-list>
+    </mat-list>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon style="margin-right: 16px">label</mat-icon>
+        {{ "labels-title-accordion" | translate }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-list>
+      @for (label of labels; track $index) {
+      <mat-list-item class="item">
+        <a
+          matListItemIcon
+          href="javascript:void(0);"
+          (click)="deleteLabel(label.id)"
+          class="delete-button"
+        >
+          <mat-icon>delete</mat-icon>
+        </a>
+        <span
+          class="item-text"
+          (click)="openSelectedLabelDialog(label, $index)"
+          >{{ label.name }}</span
+        >
+        <a
+          matListItemMeta
+          href="javascript:void(0);"
+          (click)="openSelectedLabelDialog(label, $index)"
+          class="edit-button"
+        >
+          <mat-icon>edit</mat-icon>
+        </a>
+      </mat-list-item>
+      }
+
+      <mat-action-list>
+        <button mat-list-item (click)="openNewLabelDialog()">
+          <span class="add-span">
+            <mat-icon>add</mat-icon>
+            {{ "add-label-button" | translate }}
+          </span>
+        </button>
+      </mat-action-list>
+    </mat-list>
+  </mat-expansion-panel>
+</mat-accordion>

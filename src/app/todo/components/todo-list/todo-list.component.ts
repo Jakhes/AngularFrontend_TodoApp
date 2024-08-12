@@ -86,7 +86,6 @@ export class TodoListComponent implements OnInit {
 
   public filterCompleted: boolean = false;
 
-  readonly name = model('');
   readonly dialog = inject(MatDialog);
 
   readonly checked_slider = model(false);
@@ -131,6 +130,21 @@ export class TodoListComponent implements OnInit {
     this.filterCompleted = false;
   }
 
+  // Function to update Todo if the done Checkbox is clicked
+  toggleIfTaskDone(id: number, event: MouseEvent) {
+    this.todos.map((v) => {
+      if (v.id == id) {
+        v.done = !v.done;
+        this.todoService.updateTodo(v).subscribe({
+          error: (e) => alert(e),
+        });
+      }
+    });
+    event.stopPropagation();
+  }
+
+  //#region "Todo Functions"
+
   public getTodos(): void {
     this.todoService.getTodos().subscribe({
       next: (v) => (this.todos = v),
@@ -155,38 +169,13 @@ export class TodoListComponent implements OnInit {
     event.stopPropagation();
   }
 
-  // Function to update Todo if the done Checkbox is clicked
-  toggleIfTaskDone(id: number, event: MouseEvent) {
-    this.todos.map((v) => {
-      if (v.id == id) {
-        v.done = !v.done;
-        this.todoService.updateTodo(v).subscribe({
-          error: (e) => alert(e),
-        });
-      }
-    });
-    event.stopPropagation();
-  }
+  //#endregion Todo Functions"
 
   //#region "Label Functions"
 
   public getLabels(): void {
     this.labelService.getLabels().subscribe({
       next: (v: Label[]) => (this.labels = v),
-      error: (e) => alert(e),
-    });
-  }
-
-  public addLabel(label: Label) {
-    this.labelService.addLabel(label).subscribe({
-      next: (value: Label) => this.labels.push(value),
-      error: (e) => alert(e),
-    });
-  }
-
-  deleteLabel(id: number) {
-    this.labelService.deleteLabel(id).subscribe({
-      next: () => (this.labels = this.labels.filter((x) => x.id !== id)),
       error: (e) => alert(e),
     });
   }
@@ -202,27 +191,13 @@ export class TodoListComponent implements OnInit {
     });
   }
 
-  public addUser(user: User) {
-    this.userService.addUser(user).subscribe({
-      next: (value: User) => this.users.push(value),
-      error: (e) => alert(e),
-    });
-  }
-
-  deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe({
-      next: () => (this.users = this.users.filter((x) => x.id !== id)),
-      error: (e) => alert(e),
-    });
-  }
-
   //#endregion User Functions"
 
-  openDialog(): void {
+  openNewTodoView(): void {
     const dialogRef = this.dialog.open(TodoViewDialog, {
       data: {
         id: -1,
-        name: this.inputTodo,
+        name: '',
         done: false,
         creation_date: this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
         due_date: '',

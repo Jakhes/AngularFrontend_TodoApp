@@ -2,10 +2,22 @@
   "title": "CodingKraken",
 
   "todoapp-title": "Todo App",
-  "newTask": "New Task...",
-  "all": "All",
-  "active": "Active",
+  "return-button": "Return",
+  "edit-options-button": "Users / Labels",
+
   "completed-slider-label": "Only Active",
+  "sort-by-label": "Sort by",
+  "sortBy-menu-button": "Sorting",
+  "ascending-slider-label": "Ascending",
+  "filter-by-label": "Filter by",
+  "priority-filter-menu-button": "Priority",
+  "user-filter-menu-button": "User",
+  "label-filter-menu-button": "Label",
+  "reset-button": "Reset",
+  "sortBy-name-menu-button": "Name",
+  "sortBy-priority-menu-button": "Priority",
+  "sortBy-dueDate-menu-button": "Due Date",
+  "sortBy-user-menu-button": "User",
 
   "new-task-title": "Todo Editor",
   "task-name-label": "Task name",
@@ -13,7 +25,24 @@
   "today-date-button": "Today",
   "tomorrow-date-button": "Tomorrow",
   "select-due-date-label": "Select Due Date",
-  "cancel": "Cancel",
+  "select-labels-label": "Select Labels",
+  "assign-user-label": "Assign User",
+  "no-user-option": "- - -",
   "add-task": "Add task",
-  "save-task": "Save task"
+  "save-task": "Save task",
+
+  "users-title-accordion": "Users",
+  "add-user-button": "add User",
+  "labels-title-accordion": "Labels",
+  "add-label-button": "add Label",
+
+  "label-name-input-label": "enter label name",
+  "add-label": "Add Label",
+  "save-label": "Save Label",
+
+  "user-name-input-label": "enter user name",
+  "add-user": "Add User",
+  "save-user": "Save User",
+
+  "cancel-button": "Cancel"
 }

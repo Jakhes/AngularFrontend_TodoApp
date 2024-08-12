@@ -1,0 +1,59 @@
+.edit-button {
+  color: #ccc;
+  visibility: hidden;
+}
+
+.edit-button:hover {
+  color: var(--low_priority) !important;
+}
+
+.item:hover .edit-button {
+  visibility: visible;
+}
+
+.delete-button {
+  color: #884d3e !important;
+}
+
+.delete-button:hover {
+  color: var(--high_priority) !important;
+}
+
+.item:hover .delete-button {
+  visibility: visible;
+}
+
+.item-text {
+  width: 100%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.add-span {
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  .mat-icon {
+    margin-right: 8px;
+    color: var(--high_priority);
+    border-radius: 100%;
+  }
+}
+
+.add-span:hover {
+  .mat-icon {
+    margin-right: 8px;
+    color: #ccc;
+    background-color: var(--high_priority);
+  }
+  color: var(--high_priority);
+}
+
+mat-expansion-panel {
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--no_priority_light_shade);
+}

@@ -1,0 +1,30 @@
+<mat-dialog-content>
+  <form>
+    <mat-form-field appearance="outline" color="primary" class="input-form">
+      <mat-label>{{ "user-name-input-label" | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        name="user name"
+        required
+        minlength="1"
+        maxlength="40"
+        [(ngModel)]="name"
+      />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">
+    {{ "cancel-button" | translate }}
+  </button>
+  @if (isNewUser) {
+  <button mat-button [disabled]="name() === ''" (click)="onAddUserClick()">
+    {{ "add-user" | translate }}
+  </button>
+  } @else {
+  <button mat-button [disabled]="name() === ''" (click)="onAddUserClick()">
+    {{ "save-user" | translate }}
+  </button>
+  }
+</mat-dialog-actions>

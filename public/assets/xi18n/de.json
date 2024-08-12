@@ -1,7 +1,48 @@
 {
   "title": "CodingKraken",
-  "newTask": "Neue Aufgabe...",
-  "all": "Alle",
-  "active": "Akitve",
-  "completed": "Abgehakt"
+
+  "todoapp-title": "Todo App",
+  "return-button": "Zurück",
+  "edit-options-button": "User / Label",
+
+  "completed-slider-label": "Nur Active",
+  "sort-by-label": "Sortieren nach",
+  "sortBy-menu-button": "Sortierung",
+  "ascending-slider-label": "Aufsteigend",
+  "filter-by-label": "Filtern nach",
+  "priority-filter-menu-button": "Priorität",
+  "user-filter-menu-button": "User",
+  "label-filter-menu-button": "Label",
+  "reset-button": "Zurücksetzen",
+  "sortBy-name-menu-button": "Name",
+  "sortBy-priority-menu-button": "Priorität",
+  "sortBy-dueDate-menu-button": "Frist Datum",
+  "sortBy-user-menu-button": "User",
+
+  "new-task-title": "Todo Editor",
+  "task-name-label": "Aufgaben Name",
+  "priority-label": "Priorität",
+  "today-date-button": "Heute",
+  "tomorrow-date-button": "Morgen",
+  "select-due-date-label": "Wähle Frist Datum",
+  "select-labels-label": "Wähle Label",
+  "assign-user-label": "User zuordnen",
+  "no-user-option": "---",
+  "add-task": "Hinzufügen",
+  "save-task": "Speichern",
+
+  "users-title-accordion": "User",
+  "add-user-button": "neuer User",
+  "labels-title-accordion": "Label",
+  "add-label-button": "neues Label",
+
+  "label-name-input-label": "Label Namen eingeben",
+  "add-label": "Label Hinzufügen",
+  "save-label": "Label Speichern",
+
+  "user-name-input-label": "User Namen eingeben",
+  "add-user": "User Hinzufügen",
+  "save-user": "User Speichern",
+
+  "cancel-button": "Abbrechen"
 }

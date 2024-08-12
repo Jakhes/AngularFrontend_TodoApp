@@ -16,17 +16,7 @@
             <mat-card-title
               ><h1>{{ "todoapp-title" | translate }}</h1></mat-card-title
             >
-            @if (!see_TodoList) {
-            <button
-              mat-fab
-              extended
-              class="return-button"
-              (click)="activate_TodoList()"
-            >
-              <mat-icon>arrow_back</mat-icon>
-              <span>Return</span>
-            </button>
-            }
+
             <button
               class="settings-button"
               mat-icon-button
@@ -36,20 +26,28 @@
             </button>
           </div>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="activate_UserView()">
+            <button mat-menu-item (click)="activate_OptionsView()">
               <mat-icon>edit</mat-icon>
-              <span>{{ "edit-user-button" | translate }}</span>
-            </button>
-            <button mat-menu-item (click)="activate_LabelView()">
-              <mat-icon>edit</mat-icon>
-              <span>{{ "edit-labels-button" | translate }}</span>
+              <span>{{ "edit-options-button" | translate }}</span>
             </button>
           </mat-menu>
         </mat-card-header>
         <mat-card-content class="card-body">
           @if (see_TodoList) {<app-todo-list></app-todo-list>} @if
-          (see_UserView) {<todo-user-view></todo-user-view>} @if (see_LabelView)
-          {<todo-labels-view></todo-labels-view>}
+          (see_OptionsView) {<todo-options-view
+            class="options-view"
+          ></todo-options-view
+          >} @if (!see_TodoList) {
+          <button
+            mat-fab
+            extended
+            class="return-button"
+            (click)="activate_TodoList()"
+          >
+            <mat-icon>arrow_back</mat-icon>
+            <span>{{ "return-button" | translate }}</span>
+          </button>
+          }
         </mat-card-content>
       </mat-card>
     </div>

@@ -33,10 +33,12 @@
 }
 
 .return-button {
-  color: #27292e;
-  margin-left: 32px;
+  color: var(--no_priority_light_shade);
+  float: right;
+  margin-top: 32px;
+  margin-bottom: 16px;
   padding: 16px;
-  background-color: #ffffff00;
+  background-color: #25252500;
   box-shadow: none;
   font-size: x-large;
   font-weight: 600;
@@ -46,4 +48,19 @@
   width: 40px;
   height: 40px;
   font-size: 40px;
+}
+
+@media (min-width: 601px) {
+  .options-view {
+    margin: auto;
+    display: block;
+    width: 70%;
+  }
+}
+@media (max-width: 600px) {
+  .options-view {
+    margin: auto;
+    display: block;
+    width: 100%;
+  }
 }
