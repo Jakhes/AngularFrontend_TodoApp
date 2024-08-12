@@ -3,6 +3,7 @@
     <mat-form-field appearance="outline" color="primary" class="input-form">
       <mat-label>{{ "label-name-input-label" | translate }}</mat-label>
       <input
+        (keyup.enter)="onAddLabelClick()"
         matInput
         type="text"
         name="label name"

@@ -4,6 +4,7 @@
       <mat-label>{{ "task-name-label" | translate }}</mat-label>
       <input
         matInput
+        (keydown.enter)="onAddTaskClick()"
         type="text"
         name="task name"
         required

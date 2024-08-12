@@ -47,6 +47,9 @@ export class UserDialog {
   }
 
   onAddUserClick() {
+    if (this.name().length <= 0) {
+      return;
+    }
     this.dialogRef.close({
       id: this.data.id,
       name: this.name(),

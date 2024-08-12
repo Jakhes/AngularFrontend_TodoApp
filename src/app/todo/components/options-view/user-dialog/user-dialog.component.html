@@ -4,6 +4,7 @@
       <mat-label>{{ "user-name-input-label" | translate }}</mat-label>
       <input
         matInput
+        (keydown.enter)="onAddUserClick()"
         type="text"
         name="user name"
         required
