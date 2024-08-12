@@ -7,7 +7,7 @@ import { Label } from '../models/todo';
   providedIn: 'root',
 })
 export class LabelService {
-  private apiServerUrl = 'http://localhost:8080';
+  private apiServerUrl = 'https://misty-wildflower-33934.pktriot.net';
 
   constructor(private http: HttpClient) {}
 
