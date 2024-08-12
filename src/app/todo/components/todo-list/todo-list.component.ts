@@ -90,6 +90,8 @@ export class TodoListComponent implements OnInit {
 
   readonly checked_slider = model(false);
 
+  readonly year = new Date().getFullYear();
+
   // Inject Todoservice
   constructor(
     private todoService: TodoService,
@@ -103,6 +105,7 @@ export class TodoListComponent implements OnInit {
     this.getLabels();
     this.getUsers();
     this.toggleFilterCompletedTasks();
+    this.year;
   }
 
   public setPriorityFilter(priority: Priority) {

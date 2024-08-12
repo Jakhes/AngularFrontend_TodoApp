@@ -127,11 +127,15 @@
       <span class="content">{{ todo.name }}</span>
       @if (todo.assigned_user) {<mat-card color="primary" class="user-card">
         {{ todo.assigned_user.name }} </mat-card
-      >} @if (todo.due_date) {
+      >} @if (todo.due_date) { @if (todo.due_date.includes(year.toString())) {
+      <div class="date">
+        {{ todo.due_date.toString() | date : "dd/MMM" }}
+      </div>
+      } @else {
       <div class="date">
         {{ todo.due_date.toString() | date : "dd/MMM/yyyy" }}
       </div>
-      }
+      } }
 
       <a
         href="javascript:void(0);"
