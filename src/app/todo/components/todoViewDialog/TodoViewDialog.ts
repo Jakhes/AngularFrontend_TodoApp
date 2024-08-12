@@ -23,10 +23,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Priority, Todo, Label, User } from '../../models/todo';
 import { LabelService } from '../../services/label.service';
 import { UserService } from '../../services/user.service';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'todo-view-dialog',
   templateUrl: 'todo-view.component.html',
+  styleUrl: 'todo-view.component.scss',
   standalone: true,
   imports: [
     TranslateModule,
@@ -42,6 +44,7 @@ import { UserService } from '../../services/user.service';
     MatIconModule,
     MatDatepickerModule,
     ReactiveFormsModule,
+    MatDividerModule,
   ],
   providers: [
     provideNativeDateAdapter(),

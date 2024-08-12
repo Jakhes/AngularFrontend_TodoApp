@@ -1,6 +1,6 @@
 <mat-dialog-content>
   <form>
-    <mat-form-field appearance="outline" color="primary">
+    <mat-form-field appearance="outline" color="primary" class="input-form">
       <mat-label>{{ "task-name-label" | translate }}</mat-label>
       <input
         matInput
@@ -14,7 +14,49 @@
       />
     </mat-form-field>
   </form>
+
+  <mat-divider></mat-divider>
   <div class="options">
+    <mat-form-field>
+      <mat-label>
+        <mat-icon class="priority-element-P4">flag</mat-icon>
+        {{ "priority-label" | translate }}</mat-label
+      >
+      <mat-select [(ngModel)]="priority">
+        @for (prio of priorityTypes; track $index) {
+        <mat-option [value]="prio">
+          <mat-icon class="priority-element-{{ prio }}">flag</mat-icon>
+          {{ prio }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        <mat-icon>label</mat-icon>
+        {{ "select-labels-label" | translate }}</mat-label
+      >
+      <mat-select [formControl]="labels" multiple>
+        @for (label of labelList; track label) {
+        <mat-option [value]="label">{{ label.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        <mat-icon>face</mat-icon>
+        {{ "assign-user-label" | translate }}</mat-label
+      >
+      <mat-select [(ngModel)]="assigned_User">
+        <mat-option>{{ "no-user-option" | translate }}</mat-option>
+        @for (user of userList; track user) {
+        <mat-option [value]="user">{{ user.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="date-options">
     <mat-form-field>
       <mat-label>{{ "select-due-date-label" | translate }}</mat-label>
       <input matInput [matDatepicker]="picker" [value]="due_date.value" />
@@ -23,7 +65,7 @@
         matIconSuffix
         [for]="picker"
       ></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker #picker> </mat-datepicker>
     </mat-form-field>
     <button mat-stroked-button (click)="onClickToday()">
       {{ "today-date-button" | translate }}
@@ -31,33 +73,7 @@
     <button mat-stroked-button (click)="onClickTomorrow()">
       {{ "tomorrow-date-button" | translate }}
     </button>
-    <mat-form-field>
-      <mat-label>{{ "priority-label" | translate }}</mat-label>
-      <mat-select [(ngModel)]="priority">
-        @for (prio of priorityTypes; track $index) {<mat-option [value]="prio"
-          ><mat-icon class="priority-element-{{ prio }}">flag</mat-icon
-          >{{ prio }}</mat-option
-        >}
-      </mat-select></mat-form-field
-    >
   </div>
-  <mat-form-field>
-    <mat-label>{{ "select-labels-label" | translate }}</mat-label>
-    <mat-select [formControl]="labels" multiple>
-      @for (label of labelList; track label) {
-      <mat-option [value]="label">{{ label.name }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>{{ "assign-user-label" | translate }}</mat-label>
-    <mat-select [(ngModel)]="assigned_User">
-      <mat-option>{{ "no-user-option" | translate }}</mat-option>
-      @for (user of userList; track user) {
-      <mat-option [value]="user">{{ user.name }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">
