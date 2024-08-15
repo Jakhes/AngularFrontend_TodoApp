@@ -24,3 +24,28 @@
 .settings-menu {
   margin-left: 10px;
 }
+
+@media (min-width: 621px) {
+  .nav-buttons {
+    display: block;
+  }
+  .lang-switcher {
+    display: block;
+  }
+  .settings-menu {
+    visibility: hidden;
+  }
+}
+@media (max-width: 620px) {
+  .nav-buttons {
+    display: none;
+  }
+  .lang-switcher {
+    display: none;
+  }
+  .settings-menu {
+    visibility: visible;
+
+    margin-left: auto;
+  }
+}

@@ -3,7 +3,7 @@
     <img src="/Logo.png" alt="image" class="logo-img" />
     {{ "title" | translate }}
 
-    <div>
+    <div class="nav-buttons">
       <a mat-button routerLink="/todo">Todo App</a>
       <a mat-button routerLink="/three-js">Three.js</a>
     </div>
@@ -22,18 +22,10 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <mat-icon>dialpad</mat-icon>
-          <span>Redial</span>
-        </button>
-        <button mat-menu-item disabled>
-          <mat-icon>voicemail</mat-icon>
-          <span>Check voice mail</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>notifications_off</mat-icon>
-          <span>Disable alerts</span>
-        </button>
+        <a mat-menu-item routerLink="/todo">Todo App</a>
+        <a mat-menu-item routerLink="/three-js">Three.js</a>
+        <button mat-menu-item (click)="switchLanguage('en')">EN</button>
+        <button mat-menu-item (click)="switchLanguage('de')">DE</button>
       </mat-menu>
     </div>
   </mat-toolbar-row>
