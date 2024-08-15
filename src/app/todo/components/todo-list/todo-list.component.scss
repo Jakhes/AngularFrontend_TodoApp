@@ -12,7 +12,7 @@ body {
 }
 
 .todo-list .todo-item {
-  padding: 16px;
+  padding: 8px;
   margin: 6px 0;
   border-style: solid;
   border-width: 1px;
@@ -22,6 +22,7 @@ body {
   //border-top-style: hidden;
   //border-right-style: hidden;
   cursor: pointer;
+  gap: 8px;
 }
 
 .todo-list .todo-item span {
@@ -51,8 +52,7 @@ body {
   width: 24px;
   height: 24px;
 
-  color: #ccc;
-  visibility: hidden;
+  color: var(--no_priority_shade);
 }
 
 .remove-todo-item:hover {
@@ -95,19 +95,74 @@ div.checker .checkbox-done {
   justify-content: flex-start;
   flex-direction: row;
 }
-.lower-todo-section {
-  padding: 0px 40px;
-  margin-top: 4px;
+.middle-todo-section {
+  padding: 0px 16px;
   display: flex;
   flex-direction: row;
+  justify-items: flex-start;
+  gap: 8px;
+
+  .user-card {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .date {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 }
+.lower-todo-section {
+  padding: 0px 16px;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 8px;
+}
+.todo-info-divider {
+  opacity: 0.5;
+}
+
+@media (min-width: 621px) {
+  .todo-info-divider {
+    display: none;
+  }
+  .middle-todo-section {
+    display: none;
+  }
+  .upper-todo-section {
+    .user-card {
+      display: block;
+    }
+
+    .date {
+      display: block;
+    }
+  }
+}
+@media (max-width: 620px) {
+  .todo-info-divider {
+    display: inline;
+  }
+  .middle-todo-section {
+    display: flex;
+  }
+  .upper-todo-section {
+    .user-card {
+      display: none;
+    }
+
+    .date {
+      display: none;
+    }
+  }
+}
+
 .label-card {
   color: var(--no_priority_shade);
   border-style: solid;
   border-color: var(--no_priority_shade);
   border-width: 1px;
   border-radius: 6px;
-  margin: 0px 8px;
   padding: 0px 4px;
 }
 
