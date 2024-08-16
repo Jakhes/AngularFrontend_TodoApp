@@ -22,6 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-    importProvidersFrom([TranslateModule.forRoot(provideTranslation())]),
+    importProvidersFrom([TranslateModule.forRoot(provideTranslation())]), provideAnimationsAsync(),
   ],
 };
