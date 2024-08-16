@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
   title = 'TodoApp';
 
   constructor(public translate: TranslateService) {
-    this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang('de');
   }
   ngOnInit(): void {}
 

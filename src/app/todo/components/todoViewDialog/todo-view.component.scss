@@ -20,6 +20,9 @@
       margin-bottom: 16px;
     }
   }
+  .priority-select {
+    max-width: 120px;
+  }
 }
 @media (max-width: 500px) {
   .options {
@@ -33,5 +36,8 @@
     display: flex;
     flex-direction: column;
     margin: 16px auto;
+  }
+  .priority-select {
+    max-width: 100%;
   }
 }

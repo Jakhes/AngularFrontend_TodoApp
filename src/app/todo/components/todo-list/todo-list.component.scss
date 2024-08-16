@@ -30,6 +30,7 @@ body {
   color: #fff;
   overflow: hidden;
   word-wrap: break-word;
+  font-weight: 500;
 }
 
 .todo-list .todo-item .content {
@@ -94,6 +95,7 @@ div.checker .checkbox-done {
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
+  margin: 0px 8px;
 }
 .middle-todo-section {
   padding: 0px 16px;
@@ -122,7 +124,7 @@ div.checker .checkbox-done {
   opacity: 0.5;
 }
 
-@media (min-width: 621px) {
+@media (min-width: 721px) {
   .todo-info-divider {
     display: none;
   }
@@ -139,7 +141,7 @@ div.checker .checkbox-done {
     }
   }
 }
-@media (max-width: 620px) {
+@media (max-width: 720px) {
   .todo-info-divider {
     display: inline;
   }
