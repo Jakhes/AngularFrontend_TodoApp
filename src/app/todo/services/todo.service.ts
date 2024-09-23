@@ -7,7 +7,7 @@ import { Todo } from '../models/todo';
   providedIn: 'root',
 })
 export class TodoService {
-  private apiServerUrl = 'http://167.172.102.61:8888';
+  private apiServerUrl = 'https://cloud.cosmickracken.com:8888';
 
   constructor(private http: HttpClient) {}
 
