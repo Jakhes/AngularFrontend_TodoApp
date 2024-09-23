@@ -7,7 +7,7 @@ import { Todo } from '../models/todo';
   providedIn: 'root',
 })
 export class TodoService {
-  private apiServerUrl = 'https://misty-wildflower-33934.pktriot.net';
+  private apiServerUrl = 'http://167.172.102.61:8888';
 
   constructor(private http: HttpClient) {}
 
