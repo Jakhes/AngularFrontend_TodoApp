@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Label } from '../models/todo';
+import { GlobalConstants } from './global-constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LabelService {
-  private apiServerUrl = 'http://167.172.102.61:8888';
+  private apiServerUrl = GlobalConstants.todoApiURL;
 
   constructor(private http: HttpClient) {}
 

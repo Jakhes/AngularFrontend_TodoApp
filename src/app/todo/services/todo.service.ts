@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Todo } from '../models/todo';
+import { GlobalConstants } from './global-constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
-  private apiServerUrl = 'http://167.172.102.61:8888';
+  private apiServerUrl = GlobalConstants.todoApiURL;
 
   constructor(private http: HttpClient) {}
 
