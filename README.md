@@ -1,6 +1,14 @@
 # AngularFrontendTodoApp
 
+![TodoAppMain](https://github.com/user-attachments/assets/cf9c06cf-db64-44c7-a701-1a1b00c4a9b3)
+
+This is the Frontend of the Todo App Project build with Angular.
+The Repository for the Backend can be found [here](https://github.com/Jakhes/Springbackend_TodoApp)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
+It includes Elements from [Angular Material](https://material.angular.io).
+And a little bit of Bootstrap.
+
 
 ## Development server
 
