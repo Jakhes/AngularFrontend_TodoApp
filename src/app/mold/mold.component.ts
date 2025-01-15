@@ -157,6 +157,7 @@ export class MoldComponent implements AfterViewInit, OnDestroy {
       p.setup = () => {
         if (this.container) {
           p.createCanvas(width, width).parent(this.container.nativeElement);
+          p.background(20);
           p.angleMode('degrees');
           d = p.pixelDensity();
 
