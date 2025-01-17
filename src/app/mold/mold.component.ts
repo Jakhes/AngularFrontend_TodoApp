@@ -175,6 +175,8 @@ export class MoldComponent implements AfterViewInit, OnDestroy {
           }
 
           // the Vectors will go through all primary and secondary RGB colors like an animation.
+          // start with Blue so the time that Red is not 0 is the longest at the start since the particles only read the red value.
+          // Its a fun side effect i left in since it gives it a bit of an order and chaos circle.
           rgbVec = p.createVector(0, 0, 255);
 
           // the vector represent the R/x G/y B/z values and the 6 phases when they go up or down.
