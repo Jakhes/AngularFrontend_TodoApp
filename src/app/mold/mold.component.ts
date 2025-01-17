@@ -156,7 +156,16 @@ export class MoldComponent implements AfterViewInit, OnDestroy {
 
       p.setup = () => {
         if (this.container) {
+          // reduce the number of particles for smaller screens
+          if (width < 500) {
+            num = 2000;
+          }
           p.createCanvas(width, height).parent(this.container.nativeElement);
+
+          // limit framerate to a consistent speed
+          // Todo: make the rgb effect framerate independent
+          p.frameRate(40);
+
           p.background(20);
           p.angleMode('degrees');
           d = p.pixelDensity();
@@ -166,15 +175,15 @@ export class MoldComponent implements AfterViewInit, OnDestroy {
           }
 
           // the Vectors will go through all primary and secondary RGB colors like an animation.
-          rgbVec = p.createVector(255, 0, 0);
+          rgbVec = p.createVector(0, 0, 255);
 
           // the vector represent the R/x G/y B/z values and the 6 phases when they go up or down.
-          rgb[0] = p.createVector(0, 1, 0);
-          rgb[1] = p.createVector(-1, 0, 0);
-          rgb[2] = p.createVector(0, 0, 1);
-          rgb[3] = p.createVector(0, -1, 0);
-          rgb[4] = p.createVector(1, 0, 0);
-          rgb[5] = p.createVector(0, 0, -1);
+          rgb[0] = p.createVector(1, 0, 0);
+          rgb[1] = p.createVector(0, 0, -1);
+          rgb[2] = p.createVector(0, 1, 0);
+          rgb[3] = p.createVector(-1, 0, 0);
+          rgb[4] = p.createVector(0, 0, 1);
+          rgb[5] = p.createVector(0, -1, 0);
         }
       };
       p.draw = () => {
